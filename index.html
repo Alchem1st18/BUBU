@@ -42,12 +42,29 @@
 <body class="gradient-background">
   <main class="flex items-center justify-center h-screen">
     <section class="flex flex-col items-center p-4">
-      <img
-        id="imageDisplay"
-        src="./image1.gif"
-        alt="Cute kitten with flowers"
-        class="rounded-md h-[300px] object-cover"
-      />
+      <div class="flex items-center gap-6">
+          <!-- Left meme -->
+          <img
+            src="./meme-left.gif"
+            alt="Cute meme left"
+            class="w-[150px] h-[150px] object-cover rounded-xl rotate-[-8deg]"
+          />
+        
+          <!-- Main image -->
+          <img
+            id="imageDisplay"
+            src="./image1.gif"
+            alt="Cute kitten with flowers"
+            class="rounded-md h-[300px] w-[300px] object-cover"
+          />
+        
+          <!-- Right meme -->
+          <img
+            src="./meme-right.gif"
+            alt="Cute meme right"
+            class="w-[150px] h-[150px] object-cover rounded-xl rotate-[8deg]"
+          />
+        </div>
       <h1 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4">
         Will you be my Valentine?
       </h1>
