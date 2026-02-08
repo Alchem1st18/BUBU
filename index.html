@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Will You Be My Valentine?</title>
+
+  <style>
+    body {
+      background: #ffccd5;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 40px;
+    }
+
+    button {
+      font-size: 22px;
+      padding: 12px 25px;
+      margin: 20px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    #noBtn {
+      position: absolute;
+    }
+
+    img {
+      width: 300px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="main">
+    <h1>Hey ❤️</h1>
+    <h2>Will you be my Valentine? 💘</h2>
+
+    <button onclick="yesClicked()">YES 💖</button>
+    <button id="noBtn">NO 🙃</button>
+  </div>
+
+  <div id="result" style="display:none;">
+    <h1 id="resultText"></h1>
+    <img id="meme">
+  </div>
+
+  <!-- Buzzer sound -->
+  <audio id="buzzer" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    noBtn.addEventListener("click", () => {
+      document.getElementById("buzzer").play();
+      showResult(
+        "WRONG ANSWER 😤",
+        "no-meme.jpg"
+      );
+
+      setTimeout(resetPage, 2500);
+    });
+
+    function yesClicked() {
+      showResult(
+        "YAY ❤️ You’re my Valentine!",
+        "yes-meme.jpg"
+      );
+    }
+
+    function showResult(text, imgSrc) {
+      document.getElementById("main").style.display = "none";
+      document.getElementById("result").style.display = "block";
+      document.getElementById("resultText").innerText = text;
+      document.getElementById("meme").src = imgSrc;
+    }
+
+    function resetPage() {
+      document.getElementById("result").style.display = "none";
+      document.getElementById("main").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
