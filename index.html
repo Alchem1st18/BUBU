@@ -157,6 +157,9 @@
       });
 
       yesButton.addEventListener('click', () => {
+                if (sideMemes) {
+            sideMemes.style.display = 'none';
+          }
         imageDisplay.src = IMAGE_PATHS[IMAGE_PATHS.length - 1];
         imageDisplay.alt = ALT_TEXTS[ALT_TEXTS.length - 1];
         valentineQuestion.textContent = 'Yayyyy!! 💖🥹';
