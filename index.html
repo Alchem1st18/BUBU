@@ -13,39 +13,53 @@
       overflow: hidden;
     }
 
-    /* ===== CAROUSELS ===== */
-    .carousel {
+    /* ===== INFINITE CAROUSELS ===== */
+    .carousel-wrapper {
       position: fixed;
       left: 0;
       width: 100%;
       height: 120px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
+      overflow: hidden;
       z-index: 1;
     }
 
-    .carousel img {
+    .top { top: 10px; }
+    .bottom { bottom: 10px; }
+
+    .carousel-track {
+      display: flex;
+      width: max-content;
+      animation: scrollLeft 25s linear infinite;
+    }
+
+    .bottom .carousel-track {
+      animation: scrollRight 25s linear infinite;
+    }
+
+    /* Square image container */
+    .carousel-item {
+      width: 100px;
       height: 100px;
-      border-radius: 15px;
+      margin-right: 20px;
+      border-radius: 16px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #fff;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
     }
 
-    .top {
-      top: 10px;
-      animation: slideLeft 30s linear infinite;
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 🔥 makes all images square */
     }
 
-    .bottom {
-      bottom: 10px;
-      animation: slideRight 30s linear infinite;
-    }
-
-    @keyframes slideLeft {
+    @keyframes scrollLeft {
       from { transform: translateX(0); }
       to { transform: translateX(-50%); }
     }
 
-    @keyframes slideRight {
+    @keyframes scrollRight {
       from { transform: translateX(-50%); }
       to { transform: translateX(0); }
     }
@@ -70,19 +84,13 @@
       margin-bottom: 25px;
     }
 
-    h1 {
-      color: #ff4d6d;
-      margin-bottom: 5px;
-    }
-
-    h2 {
-      color: #333;
-      margin-bottom: 30px;
-    }
+    h1 { color: #ff4d6d; }
+    h2 { color: #333; }
 
     .buttons {
       position: relative;
       height: 120px;
+      margin-top: 20px;
     }
 
     button {
@@ -100,9 +108,7 @@
       box-shadow: 0 10px 20px rgba(255,77,109,0.4);
     }
 
-    #yesBtn:hover {
-      transform: scale(1.08);
-    }
+    #yesBtn:hover { transform: scale(1.08); }
 
     #noBtn {
       background: #eee;
@@ -115,7 +121,6 @@
     /* ===== RESULT PAGE ===== */
     #result {
       display: none;
-      position: relative;
       min-height: 100vh;
       background: radial-gradient(circle, #ffd6e0, #ff9eb5);
       text-align: center;
@@ -150,22 +155,44 @@
 
 <body>
 
-  <!-- TOP CAROUSEL -->
-  <div class="carousel top">
-    <img src="top1.jpg"><img src="top2.jpg"><img src="top3.jpg">
-    <img src="top4.jpg"><img src="top5.jpg">
+  <!-- TOP INFINITE CAROUSEL -->
+  <div class="carousel-wrapper top">
+    <div class="carousel-track">
+      <!-- images duplicated for seamless loop -->
+      <div class="carousel-item"><img src="top1.jpg"></div>
+      <div class="carousel-item"><img src="top2.jpg"></div>
+      <div class="carousel-item"><img src="top3.jpg"></div>
+      <div class="carousel-item"><img src="top4.jpg"></div>
+      <div class="carousel-item"><img src="top5.jpg"></div>
+
+      <div class="carousel-item"><img src="top1.jpg"></div>
+      <div class="carousel-item"><img src="top2.jpg"></div>
+      <div class="carousel-item"><img src="top3.jpg"></div>
+      <div class="carousel-item"><img src="top4.jpg"></div>
+      <div class="carousel-item"><img src="top5.jpg"></div>
+    </div>
   </div>
 
-  <!-- BOTTOM CAROUSEL -->
-  <div class="carousel bottom">
-    <img src="bottom1.jpg"><img src="bottom2.jpg"><img src="bottom3.jpg">
-    <img src="bottom4.jpg"><img src="bottom5.jpg">
+  <!-- BOTTOM INFINITE CAROUSEL -->
+  <div class="carousel-wrapper bottom">
+    <div class="carousel-track">
+      <div class="carousel-item"><img src="bottom1.jpg"></div>
+      <div class="carousel-item"><img src="bottom2.jpg"></div>
+      <div class="carousel-item"><img src="bottom3.jpg"></div>
+      <div class="carousel-item"><img src="bottom4.jpg"></div>
+      <div class="carousel-item"><img src="bottom5.jpg"></div>
+
+      <div class="carousel-item"><img src="bottom1.jpg"></div>
+      <div class="carousel-item"><img src="bottom2.jpg"></div>
+      <div class="carousel-item"><img src="bottom3.jpg"></div>
+      <div class="carousel-item"><img src="bottom4.jpg"></div>
+      <div class="carousel-item"><img src="bottom5.jpg"></div>
+    </div>
   </div>
 
   <!-- MAIN PAGE -->
   <div class="card" id="main">
     <img src="center-image.gif">
-
     <h1>Ms. Khushi,</h1>
     <h2>Would you please be my Valentine? 💘</h2>
 
@@ -187,13 +214,8 @@
   </div>
 
   <!-- AUDIO -->
-  <audio id="bgMusic" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_7a5c4f8b3e.mp3">
-  </audio>
-
-  <audio id="cry">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4a89c9c37d.mp3">
-  </audio>
+  <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_7a5c4f8b3e.mp3"></audio>
+  <audio id="cry" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4a89c9c37d.mp3"></audio>
 
   <script>
     const noBtn = document.getElementById("noBtn");
@@ -205,12 +227,9 @@
 
     let noCount = 0;
 
-    // Autoplay music with fallback
     window.addEventListener("load", () => {
       bgMusic.play().catch(() => {
-        document.body.addEventListener("click", () => {
-          bgMusic.play();
-        }, { once: true });
+        document.body.addEventListener("click", () => bgMusic.play(), { once: true });
       });
     });
 
